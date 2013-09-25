@@ -1,0 +1,228 @@
+{
+    "name": "controller_node_env",
+    "description": "baremetalcloud OpenStack environment",
+    "cookbook_versions": {},
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {},
+    "override_attributes": {
+    	"nagios" : {
+            "password" : "nagios_password",
+    		"server_auth_method" : "htauth"
+    	},
+        "ganglia" : {
+            "username" : "admin",
+            "password" : "ganglia_password"
+        },
+        "rsyslog" : {
+    		"server_ip" : "rsyslog_server_ip"
+    	},
+        "splunk" : {
+            "web_server_port" : "splunk_port",
+            "auth" : "admin:splunk_password"
+        },
+        "grizzly": {
+            "compute_node": {
+                "root": {
+                    "password": "root_password"
+                },
+                "network": {
+                    "private": {
+                        "range": "192.168.100.0/24",
+                        "interface": "eth0:1",
+                        "ip": "192.168.100.8",
+                        "netmask": "255.255.255.0"
+                    },
+                   "public": {
+                      "interface": "eth0",
+                      "ip": "10.35.124.179",
+                      "netmask": "255.255.255.248",
+                      "range": "10.35.124.176/29",
+                      "gateway": "10.35.124.182",
+                      "domain_name": "baremetalcloud.com",
+                      "nameserver": "199.34.120.1"
+                  }
+              },
+              "ovs": {
+                  "properties": [
+                      "tenant_network_type",
+                      "tunnel_id_ranges",
+                      "integration_bridge",
+                      "tunnel_bridge",
+                      "local_ip",
+                      "enable_tunneling"
+                  ],
+                  "tenant_network_type": "gre",
+                  "tunnel_id_ranges": "1:1000",
+                  "integration_bridge": "br-int",
+                  "tunnel_bridge": "br-tun",
+                  "local_ip": "192.168.100.8",
+                  "enable_tunneling": "True"
+              }
+          },
+          "network_node": {
+              "root": {
+                  "password": "root_password"
+              },
+              "network": {
+                  "private": {
+                      "range": "192.168.100.0/24",
+                      "interface": "eth0:1",
+                      "ip": "192.168.100.2",
+                      "netmask": "255.255.255.0"
+                  },
+                  "public": {
+                      "interface": "eth0",
+                      "ip": "10.35.124.178",
+                      "netmask": "255.255.255.248",
+                      "range": "10.35.124.176/29",
+                      "gateway": "10.35.124.182",
+                      "domain_name": "baremetalcloud.com",
+                      "nameserver": "199.34.120.1"
+                  }
+              },
+              "ovs": {
+                  "properties": [
+                      "tenant_network_type",
+                      "tunnel_id_ranges",
+                      "integration_bridge",
+                      "tunnel_bridge",
+                      "local_ip",
+                      "enable_tunneling"
+                  ],
+                  "tenant_network_type": "gre",
+                  "tunnel_id_ranges": "1:1000",
+                  "integration_bridge": "br-int",
+                  "tunnel_bridge": "br-tun",
+                  "local_ip": "192.168.100.2",
+                  "enable_tunneling": "True"
+              }
+          },
+          "controller_node": {
+              "admin": {
+                  "password": "admin_password",
+                  "email": "openstack.cookbook@baremetalcloud.com",
+                  "token": "admin_token_string"
+              },
+              "tenant": {
+                  "password": "tenant_password",
+                  "username": "tenant_username",
+                  "name": "tenant_name"
+              },
+              "network": {
+                  "private": {
+                      "range": "192.168.100.0/24",
+                      "interface": "eth0:1",
+                      "ip": "192.168.100.1",
+                      "netmask": "255.255.255.0"
+                  },
+                  "public": {
+                      "interface": "eth0",
+                      "ip": "10.35.124.177",
+                      "netmask": "255.255.255.248",
+                      "range": "10.35.124.176/29",
+                      "gateway": "10.35.124.182",
+                      "domain_name": "baremetalcloud.com",
+                      "nameserver": "199.34.120.1"
+                  },
+                  "floating": {
+                      "range": "10.33.127.184/29",
+                      "netmask": "255.255.255.248",
+                      "first_ip": "10.33.127.185",
+                      "last_ip": "10.33.127.189",
+                      "gateway": "10.33.127.190"
+                  }
+              },
+              "ovs": {
+                  "properties": [
+                      "tenant_network_type",
+                      "tunnel_id_ranges",
+                      "enable_tunneling"
+                  ],
+                  "tenant_network_type": "gre",
+                  "tunnel_id_ranges": "1:1000",
+                  "enable_tunneling": "True"
+              },
+              "mysql": {
+                  "root_password": "mysql_password",
+                  "databases": [
+                      "keystone",
+                      "nova",
+                      "glance",
+                      "cinder",
+                      "quantum",
+                      "swift"
+                  ],
+                  "users": [
+                      "keystone",
+                      "nova",
+                      "glance",
+                      "cinder",
+                      "quantum"
+                  ],
+                  "user_data": {
+                      "keystone": {
+                          "password": "keystone_mysql_password"
+                      },
+                      "nova": {
+                          "password": "nova_mysql_password"
+                      },
+                      "glance": {
+                          "password": "glance_mysql_password"
+                      },
+                      "cinder": {
+                          "password": "cinder_mysql_password"
+                      },
+                      "quantum": {
+                          "password": "quantum_mysql_password"
+                      }
+                  }
+              },
+              "swift": {
+                  "swift_hash_path_suffix": "swift_big_hash_string",
+                  "swift_proxy_ip" : "swift_proxy_ip_address",
+                  "username": "swift",
+                  "password": "swift_password"
+              },
+              "nova": {
+                  "username": "nova",
+                  "password": "nova_password"
+              },
+              "cinder": {
+                  "username": "cinder",
+                  "password": "cinder_password",
+                  "iscsi_target_path": "target iqn string",
+                  "iscsi_target_ip": "target portal IP"
+              },
+              "quantum": {
+                  "username": "quantum",
+                  "password": "quantum_password"
+              },
+              "glance": {
+                  "username": "glance",
+                  "password": "glance_password",
+                  "swift_store_auth_address" : "http://swift_auth_identity_fqdn:5000/v2.0/",
+                  "swift_store_tenant" : "swift_auth_identity_tenant",
+                  "swift_store_user" : "swift_auth_identity_username",
+                  "swift_store_password" : "swift_auth_identity_password",
+                  "image-names": [
+                      "cirros",
+                      "ubuntu12.04"
+                  ],
+                  "image-data": {
+                      "ubuntu12.04": {
+                          "disk_format": "raw",
+                          "container_format": "bare",
+                          "url": "http://uec-images.ubuntu.com/releases/12.04/release/ubuntu-12.04.2-server-cloudimg-amd64-disk1.img"
+                      },
+                      "cirros": {
+                          "disk_format": "qcow2",
+                          "container_format": "bare",
+                          "url": "https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
+                      }
+                  }
+              }
+          }
+      }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "id": "mysql",
+  "hostgroup_name": "mysql",
+  "command_line": "$USER1$/check_mysql -H $HOSTADDRESS$ -u nagios -p zeFydqxu7h"
+}
+

@@ -1,0 +1,18 @@
+scp <%= @proxy_nodes[0]["ipaddress"] %>:/etc/swift/*ring.gz . 
+<% @storage_nodes.each_with_index do |node, index| %>
+scp *.ring.gz <%= node["ipaddress"] %>:/etc/swift
+ssh <%= node["ipaddress"] %> service swift-object restart
+ssh <%= node["ipaddress"] %> service swift-object-replicator restart
+ssh <%= node["ipaddress"] %> service swift-object-updater restart
+ssh <%= node["ipaddress"] %> service swift-object-auditor restart
+ssh <%= node["ipaddress"] %> service swift-container restart
+ssh <%= node["ipaddress"] %> service swift-container-replicator restart
+ssh <%= node["ipaddress"] %> service swift-container-updater restart
+ssh <%= node["ipaddress"] %> service swift-container-auditor restart
+ssh <%= node["ipaddress"] %> service swift-account restart
+ssh <%= node["ipaddress"] %> service swift-account-replicator restart
+ssh <%= node["ipaddress"] %> service swift-account-updater restart
+ssh <%= node["ipaddress"] %> service swift-account-auditor restart
+<% end %>
+
+

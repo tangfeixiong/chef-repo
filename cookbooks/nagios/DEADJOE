@@ -1,0 +1,14 @@
+
+*** These modified files were found in JOE when it aborted on Wed Jun 26 13:00:00 2013
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+authorized_keys
+.git/COMMIT_EDITMSG
+nagios/
+server.rb
+attributes/default.rb
+attributes/server.rb
+/etc/nagios3/apache2.conf
+/etc/apache2/sites-enabled/nagios3.conf
+/etc/apache2/sites-enabled/nagios3.conf

@@ -1,0 +1,53 @@
+{
+   "name" : "swift_proxy_node_env",
+   "description" : "baremetalcloud OpenStack environment",
+   "cookbook_versions" :
+      {
+      },
+   "json_class" : "Chef::Environment",
+   "chef_type" : "environment",
+   "default_attributes" :
+      {
+      },
+   "override_attributes" :
+      {
+        "rsyslog": {
+                "server":"192.168.100.1"
+        },
+          "grizzly" :
+            {
+               "admin" :
+                  {
+                     "password" : "c571d55d8e7e",
+                     "email" : "cookbook@baremetalcloud.com",
+                     "token" : "Aon243BSMlp3jNB"
+                  },
+               "network" :
+                  {
+                     "private" :
+                        {
+                           "range" : "192.168.100.0/24",
+                           "interface" : "eth0:1",
+                           "ip" : "192.168.100.4",
+                           "netmask" : "255.255.255.0"
+                        },
+                     "public" :
+                        {
+                           "interface" : "eth0",
+                           "ip" : "198.36.126.8",
+                           "netmask" : "255.255.255.224",
+                           "range" : "198.36.126.0/27",
+                           "gateway" : "198.36.126.30",
+                           "domain_name" : "baremetalcloud.com",
+                           "nameserver" : "199.34.120.1"
+                        }
+                  },
+               "swift" :
+                  {
+                     "swift_hash_path_suffix" : "144a471db2d902694d875530",
+                     "username" : "swift",
+                     "password" : "5686c3d07923"
+                  }
+            }
+      }
+}

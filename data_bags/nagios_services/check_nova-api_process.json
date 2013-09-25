@@ -1,0 +1,6 @@
+{
+  "id": "nova-api_process",
+  "hostgroup_name": "controller_node",
+  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_nova-api_process"
+}
+

@@ -26,23 +26,56 @@ Usage - Deploying at baremetalcloud
 From **baremetalcloud** web panel, the entire cluster can be deployed in within 30 minutes. This procedure can be easily done considering that you have an active account. These are the steps:
 
 1. Go to https://noc.baremetalcloud.com and login.
-2. Open Servers tab, add one servers with `Ubuntu 12.04 Chef 11` image and name it as `controller`.
-3. Add two other servers with `Ubuntu 12.04 Cloud` image and name them as `network` and `compute-001`. 
-3. When the servers' status change to `Active`, connect into `controller` node via ssh.
-4. Clone the github repository:
+2. Click on `Add Server` and select your configuration:
+![alt foo](http://www.baremetalcloud.com/downloads/github/01.png)
+
+3. Choose `Ubuntu 12.04 Chef 11` image 
+![alt foo](http://www.baremetalcloud.com/downloads/github/02.png)
+ 
+4. Your server will be added and its `status` will be set to `Restoring Clonezilla Image`. Click on `Edit`:
+![alt foo](http://www.baremetalcloud.com/downloads/github/03.png)
+
+5. Name it as `controller`:
+![alt foo](http://www.baremetalcloud.com/downloads/github/04.png)
+
+6. While it is restoring Ubuntu 12.04 Chef 11 image, click on `Add Server` and add two more servers:
+![alt foo](http://www.baremetalcloud.com/downloads/github/05.png)
+
+7. Select `Ubuntu 12.04 Cloud` image:
+![alt foo](http://www.baremetalcloud.com/downloads/github/06.png)
+
+8. Name them as `network` and `compute-001`:
+![alt foo](http://www.baremetalcloud.com/downloads/github/07.png)
+![alt foo](http://www.baremetalcloud.com/downloads/github/08.png)
+
+9. These three servers will restore their images:
+![alt foo](http://www.baremetalcloud.com/downloads/github/09.png)
+
+10. Make sure their status are `Active` and their credentials were generated.
+![alt foo](http://www.baremetalcloud.com/downloads/github/10.png)
+
+11. Click on `Cluster` tab then `Add Cluster`:
+![alt foo](http://www.baremetalcloud.com/downloads/github/11.png)
+
+12. Add a new `OpenStack` cluster and set a name:
+![alt foo](http://www.baremetalcloud.com/downloads/github/12.png)
+
+13. A JSON will be generated and it will be used as a Chef environment:
+![alt foo](http://www.baremetalcloud.com/downloads/github/13.png)
+
+14. Connect into `controller` server via ssh.
+15. Clone the github repository:
 
 	`cd /etc/chef-server/`
 	
 	`git clone https://github.com/baremetalcloud/chef-repo.git`
 
 
-5. Back to the web interface, open Clusters tab and add a new OpenStack cluster.
-6. Set type to OpenStack, choose a name and click on `Add Cluster`. If all dependencies match the requirements, it will give you the environment text in JSON format, otherwise it will show which one does not match.
-7. Copy the JSON text.
-8. Back to `controller` server, paste the JSON into the environment file: `/etc/chef-server/chef-repo/environments/controller_node_env.json`.
-9. Initiate the installation
+16. Paste the JSON into the environment file: `/etc/chef-server/chef-repo/environments/controller_node_env.json`.
+17. Initiate the installation
 
 	`./init.sh`
+
 
 In addiction to this, we have made a video showing these steps that might help the understanding of *baremetalcloud*'s web interface:
 
@@ -71,6 +104,7 @@ License and Author
 ------------------
 
 Author:: JP Gagne (<jp@baremetalcloud.com>)
+
 Author:: Diego Desani (<diego@baremetalcloud.com>)
 
 Licensed under the Apache License, Version 2.0 (the "License");

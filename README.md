@@ -5,8 +5,8 @@
 Overview
 --------
 
-Every Chef installation needs a Chef Repository. This is the repository that **baremetalcloud** have setup to help users to deploy OpenStack clusters.
-It currently supports Ubuntu 12.04 and installs OpenStack Grizzly version.
+Every Chef installation needs a Chef Repository. This is the repository that **baremetalcloud** has setup to help users deploy OpenStack clusters.
+It currently supports Ubuntu 12.04 and installs the OpenStack Grizzly version.
 
 The installation is based on an environment file that has definitions for Compute, Network, Image, Block Storage and Monitoring services, which can be customized for each deployment. This give us the flexibility to create OpenStack clusters as a service.
 
@@ -14,7 +14,7 @@ The installation is based on an environment file that has definitions for Comput
 Repository Cookbooks
 --------------------
 
-This repository contains several cookbooks that orchestrate OpenStack services and their monitoring installation. Here is a summary of these two types of ser:
+This repository contains several cookbooks that orchestrate OpenStack services and their monitoring installation. Here is a summary of these two types of services:
 
 * `grizzly` - OpenStack Grizzly cookbook.
 * `nagios, ganglia, ryslog and splunk` - Monitoring cookbooks.
@@ -23,7 +23,7 @@ This repository contains several cookbooks that orchestrate OpenStack services a
 Usage - Deploying at baremetalcloud
 ---------------------------------------
 
-From **baremetalcloud** web panel, the entire cluster can be deployed in within 30 minutes. This procedure can be easily done considering that you have an active account. These are the steps:
+From **baremetalcloud** web panel, the entire cluster can be deployed in within 30 minutes. This procedure can be easily accomplished with an active account. These are the steps:
 
 1. Go to https://noc.baremetalcloud.com and login.
 2. Click on `Add Server` and select your configuration:
@@ -77,16 +77,10 @@ From **baremetalcloud** web panel, the entire cluster can be deployed in within 
 	`./init.sh`
 
 
-In addiction to this, we have made a video showing these steps that might help the understanding of *baremetalcloud*'s web interface:
-
-		**ADD HERE THE INSTALLATION VIDEO**
---
-
-
 Usage - without baremetalcloud web panel
 ------------------------------------------
 
-The OpenStack Grizzly cookbook requires three servers: `controller`, `network` and `compute-001` for the first installation. These servers' name should be reachable from the controller node.
+The OpenStack Grizzly cookbook requires three servers: `controller`, `network` and `compute-001` for the first installation. These servers name should be reachable from the controller node.
 
 Access your `controller` node and clone this github repository:
 

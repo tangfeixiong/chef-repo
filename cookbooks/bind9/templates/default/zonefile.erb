@@ -1,0 +1,30 @@
+$TTL <%= @global_ttl %>
+@ IN SOA <%= @soa %> <%= @contact %> (
+                <%= @serial %> ; serial [yyyyMMddNN]
+                4H      ; refresh
+                30M     ; retry
+                1W      ; expiry
+                1D      ; minimum
+);
+
+                IN              NS              <%= @soa %>
+<% @nameserver.each do |ns| -%>
+                IN              NS              <%= ns %>
+<% end %>
+
+
+<% if @mail_exchange != nil %>
+<% @mail_exchange.each do |mx| -%>
+<%= if mx['name'] then mx['name'] end %>	IN     MX <%= mx['priority'] %>           <%= mx['host'] %>
+<% end %>
+<% end %>
+
+<% @records.each do |record| -%>
+  <% if record['type'] == 'CNAME' || record['type'] == 'SRV' -%>
+<%=record['name'] %>   <%= if record['ttl'] then record['ttl'] end %> IN   <%= record['type'] %>   <%= record['ip'] %>.
+  <% elsif record['type'] == 'TXT' %>
+<%=record['name'] %>   <%= if record['ttl'] then record['ttl'] end %> IN   <%= record['type'] %>   "<%= record['ip'] %>"
+  <% else %>
+<%=record['name'] %>   <%= if record['ttl'] then record['ttl'] end %> IN   <%= record['type'] %>   <%= record['ip'] %>
+  <% end -%>
+<% end %>

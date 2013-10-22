@@ -14,5 +14,5 @@ override_attributes "nagios" => {
     "server_auth_method" => "htauth"
   },
   "rsyslog" => {
-    "server_ip" => "199.34.121.38"
+    "server_ip" => ""
 }

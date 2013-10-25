@@ -1,0 +1,71 @@
+#!/bin/bash
+
+source /root/creds
+
+TENANT_NAME=<%= @tenant_name  %>
+USER_NAME=<%= @tenant_username  %>
+USER_PASSWORD=<%= @tenant_password  %>
+PUBLIC_NETWORK_NAME=baremetalcloud_network
+PUBLIC_NETWORK=172.16.0.0/12
+FLOATINGIP_NETWORK_NAME=ext_net
+FLOATINGIP_NETWORK=<%= @floatingip_range  %>
+FLOATINGIP_NETWORK_START=<%= @floatingip_first_ip  %>
+FLOATINGIP_NETWORK_END=<%= @floatingip_last_ip  %>
+FLOATINGIP_NETWORK_GATEWAY=<%= @floatingip_gateway  %>
+
+AUTH_URL=http://<%= @controller_private_ip %>:5000/v2.0/
+
+# Shortcut function to get a newly generated ID
+function get_field() {
+    while read data; do
+        if [ "$1" -lt 0 ]; then
+            field="(\$(NF$1))"
+        else
+            field="\$$(($1 + 1))"
+        fi
+        echo "$data" | awk -F'[ \t]*\\|[ \t]*' "{print $field}"
+    done
+}
+
+TENANT_ID=$(keystone tenant-create --name $TENANT_NAME | grep " id " | get_field 2)
+echo TENANT_ID=$TENANT_ID
+
+USER_ID=$(keystone user-create --name=$USER_NAME --pass=$USER_PASSWORD --tenant-id $TENANT_ID --email=$USER_EMAIL | grep " id " | get_field 2)
+echo USER_ID=$USER_ID
+
+MEMBER_ROLE_ID=$(keystone role-list | grep Member | get_field 1)
+
+USER_ROLE_ID=$(keystone user-role-add --tenant-id $TENANT_ID --user-id $USER_ID --role-id=$MEMBER_ROLE_ID | grep " id " | get_field 2)
+
+NETWORK_ID=$(neutron net-create --tenant-id $TENANT_ID $PUBLIC_NETWORK_NAME | grep " id " | get_field 2)
+echo NETWORK_ID=$NETWORK_ID
+
+SUBNET_ID=$(neutron subnet-create --tenant-id $TENANT_ID $PUBLIC_NETWORK_NAME $PUBLIC_NETWORK | grep " id " | get_field 2)
+echo SUBNET_ID=$SUBNET_ID
+
+ROUTER_ID=$(neutron router-create --tenant-id $TENANT_ID router_$TENANT_NAME | grep " id " | get_field 2)
+echo ROUTER_ID=$ROUTER_ID
+
+L3_AGENT_ID=$(neutron agent-list | grep "L3 agent" | get_field 1)
+# neutron l3-agent-router-add $L3_AGENT_ID router_$TENANT_NAME
+neutron router-interface-add $ROUTER_ID $SUBNET_ID
+cd /etc/init.d/; for i in $( ls neutron-* ); do sudo service $i restart; done
+sleep 2
+
+FLOATINGIP_NETWORK_ID=$(neutron net-create --tenant-id $TENANT_ID $FLOATINGIP_NETWORK_NAME --router:external=True | grep " id " | get_field 2)
+echo FLOATINGIP_NETWORK_ID=$FLOATINGIP_NETWORK_ID
+
+FLOATING_IP_SUBNET_ID=$(neutron subnet-create --tenant-id $TENANT_ID --allocation-pool start=$FLOATINGIP_NETWORK_START,end=$FLOATINGIP_NETWORK_END --gateway $FLOATINGIP_NETWORK_GATEWAY  $FLOATINGIP_NETWORK_NAME $FLOATINGIP_NETWORK --dns-nameserver 199.34.120.1 --enable_dhcp=False | grep " id " | get_field 2)
+echo FLOATING_IP_SUBNET_ID=FLOATING_IP_SUBNET_ID
+neutron router-gateway-set $ROUTER_ID $FLOATINGIP_NETWORK_ID
+
+echo export OS_TENANT_NAME=$TENANT_NAME >> /root/creds_$TENANT_NAME
+echo export OS_USERNAME=$USER_NAME >> /root/creds_$TENANT_NAME
+echo export OS_PASSWORD=$USER_PASSWORD  >> /root/creds_$TENANT_NAME
+echo export OS_AUTH_URL=$AUTH_URL  >> /root/creds_$TENANT_NAME
+
+source /root/creds_$TENANT_NAME
+
+nova --no-cache secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+nova --no-cache secgroup-add-rule default tcp 22 22 0.0.0.0/0
+

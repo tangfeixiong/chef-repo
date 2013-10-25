@@ -1,0 +1,26 @@
+[DEFAULT]
+
+# Common
+rootwrap_config = /etc/cinder/rootwrap.conf
+api_paste_confg = /etc/cinder/api-paste.ini
+iscsi_helper = ietadm
+iscsi_ip_address = <%= @private_ip %>
+volumes_dir = /var/lib/cinder/volumes
+volume_name_template = volume-%s
+volume_group = cinder-volumes
+auth_strategy = keystone
+state_path = /var/lib/cinder
+lock_path = /var/lock/cinder
+
+# Log
+verbose = True
+syslog_log_facility=LOG_LOCAL0
+use_syslog=yes
+
+# Broker
+rpc_backend = cinder.openstack.common.rpc.impl_kombu
+rabbit_host =  <%= @rabbit_host %>
+rabbit_port = 5672
+
+[database]
+connection = mysql://<%= @cinder_user %>:<%= @cinder_password %>@<%= @private_ip %>/cinder

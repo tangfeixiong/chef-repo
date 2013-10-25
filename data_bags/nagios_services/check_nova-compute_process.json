@@ -1,6 +1,0 @@
-{
-  "id": "nova-compute_process",
-  "hostgroup_name": "compute_node",
-  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_nova-compute_process"
-}
-

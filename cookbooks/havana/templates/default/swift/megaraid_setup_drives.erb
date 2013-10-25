@@ -1,0 +1,55 @@
+
+#this can be automated by using node[block_device]
+
+#get MegaCli-8.07.10-1.noarch.rpm from chain:/root
+
+rpm2cpio MegaCli-8.07.10-1.noarch.rpm | cpio -idmv
+
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:0] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:1] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:2] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:3] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:4] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:5] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:6] -a0
+/opt/MegaRAID/MegaCli/MegaCli64  -CfgLdAdd -r0 [32:7] -a0
+
+mkfs.xfs -i size=1024 -f /dev/sdb1 &
+mkfs.xfs -i size=1024 -f /dev/sdc1 &
+mkfs.xfs -i size=1024 -f /dev/sdd1 &
+mkfs.xfs -i size=1024 -f /dev/sde1 &
+mkfs.xfs -i size=1024 -f /dev/sdf1 &
+mkfs.xfs -i size=1024 -f /dev/sdg1 &
+mkfs.xfs -i size=1024 -f /dev/sdh1 &
+mkfs.xfs -i size=1024 -f /dev/sdi1 &
+
+echo "UUID=`xfs_admin -u /dev/sdb1 | awk '{ print $3 }'` /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdc1 | awk '{ print $3 }'` /srv/node/sdc1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdd1 | awk '{ print $3 }'` /srv/node/sdd1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sde1 | awk '{ print $3 }'` /srv/node/sde1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdf1 | awk '{ print $3 }'` /srv/node/sdf1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdg1 | awk '{ print $3 }'` /srv/node/sdg1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdh1 | awk '{ print $3 }'` /srv/node/sdh1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdi1 | awk '{ print $3 }'` /srv/node/sdi1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "UUID=`xfs_admin -u /dev/sdj1 | awk '{ print $3 }'` /srv/node/sdi1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+
+mkdir /srv/node
+mkdir /srv/node/sdb1
+mkdir /srv/node/sdc1
+mkdir /srv/node/sdd1
+mkdir /srv/node/sde1
+mkdir /srv/node/sdf1
+mkdir /srv/node/sdg1
+mkdir /srv/node/sdh1
+mkdir /srv/node/sdi1
+
+mount /srv/node/sdb1
+mount /srv/node/sdc1
+mount /srv/node/sdd1
+mount /srv/node/sde1
+mount /srv/node/sdf1
+mount /srv/node/sdg1
+mount /srv/node/sdh1
+mount /srv/node/sdi1
+
+

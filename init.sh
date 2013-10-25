@@ -15,10 +15,11 @@ knife data bag from file -a
 EDITOR="sed -e \"s/_default/controller_node_env/\" -i " knife node edit controller
 
 # Associate OpenStack roles into  controller node
-knife node run_list add controller 'role[firewall], role[controller_node]'
+knife node run_list add controller 'role[firewall],role[havana_controller_node]'
 
 # 60 seconds is the required time so the new environment will be available when chef-client runs
 sleep 60 && chef-client
+
 
 # Setup hosts file and share ssh contronller public key across network and compute nodes
 /root/controller_scripts/setup_hosts_and_keys
@@ -28,8 +29,9 @@ knife bootstrap -N network network  -i /root/.ssh/id_rsa
 knife bootstrap -N compute-001 compute-001 -i /root/.ssh/id_rsa
 
 # Associate OpenStack roles into network and compute nodes
-knife node run_list add network 'role[firewall], role[network_node]'
-knife node run_list add compute-001 'role[firewall], role[compute_node]'
+knife node run_list add network 'role[firewall],role[havana_network_node]'
+knife node run_list add compute-001 'role[firewall],role[havana_compute_node]'
+
 
 # Run chef-client on network and compute node
 ssh network chef-client
@@ -39,10 +41,9 @@ ssh compute-001 chef-client
 /root/controller_scripts/create_tenant
 
 # Associate Monitoring roles into all nodes and execute chef-client 
-knife node run_list add controller 'role[monitoring_server], role[monitoring_client]'
+knife node run_list add controller 'role[monitoring_server],role[monitoring_client]'
 chef-client
 knife node run_list add network 'role[monitoring_client]'
 ssh network chef-client
 knife node run_list add compute-001 'role[monitoring_client]'
 ssh compute-001 chef-client
-

@@ -1,6 +1,0 @@
-{
-  "id": "quantum-dhcp-agent_process",
-  "hostgroup_name": "controller_node",
-  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_quantum-dhcp-agent_process"
-}
-

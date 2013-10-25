@@ -1,0 +1,16 @@
+#!/bin/bash
+echo <%= @network_public_ip  %> network >> /etc/hosts
+echo <%= @compute_public_ip  %> compute-001 >> /etc/hosts
+
+mkdir /root/.ssh/
+chmod 700 /root/.ssh/
+ssh-keygen -f /root/.ssh/id_rsa -N ''
+
+ssh-keyscan network >> /root/.ssh/known_hosts
+ssh-keyscan compute-001 >> /root/.ssh/known_hosts
+
+sshpass -p '<%= @network_root_password %>'  ssh-copy-id -i /root/.ssh/id_rsa network
+sshpass -p '<%= @compute_root_password %>'  ssh-copy-id -i /root/.ssh/id_rsa compute-001
+
+ssh network 'echo <%= @controller_public_ip %> controller.baremetalcloud.com >> /etc/hosts'
+ssh compute-001 'echo <%= @controller_public_ip %> controller.baremetalcloud.com >> /etc/hosts'

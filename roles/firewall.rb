@@ -40,6 +40,10 @@ override_attributes "firewall" => {
           "port" => "5000"
       }
     },
+    {"cinder" => {
+          "port" => "8776"
+      }
+    },
     {"vnc" => {
           "port" => "6080"
       }

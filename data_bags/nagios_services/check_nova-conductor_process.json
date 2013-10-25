@@ -1,6 +1,0 @@
-{
-  "id": "nova-conductor_process",
-  "hostgroup_name": "controller_node",
-  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_nova-conductor_process"
-}
-

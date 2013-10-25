@@ -22,7 +22,7 @@ if node['nagios']['enable_ssl']
   include_recipe "apache2::mod_ssl"
 end
 
-apache_site "000-default" do
+apache_site "default" do
   enable false
 end
 

@@ -1,0 +1,61 @@
+[DEFAULT]
+
+# Common
+my_ip=<%= @private_ip %>
+lock_path=/var/lock/nova
+api_paste_config=/etc/nova/api-paste.ini
+enabled_apis=ec2,osapi_compute,metadata
+state_path=/var/lib/nova
+root_helper=sudo nova-rootwrap /etc/nova/rootwrap.conf
+rpc_backend = nova.rpc.impl_kombu
+rabbit_host=<%= @controller_private_ip %>
+compute_driver=libvirt.LibvirtDriver
+
+# Logs
+verbose=True
+syslog_log_facility=LOG_LOCAL0
+use_syslog=yes
+logdir=/var/log/nova
+
+# Imaging service
+glance_api_servers=<%= @controller_private_ip %>:9292
+
+# Auth
+auth_strategy=keystone
+use_deprecated_auth=false
+
+# Network settings
+network_api_class=nova.network.neutronv2.api.API
+neutron_url=http://<%= @controller_private_ip %>:9696
+neutron_auth_strategy=keystone
+neutron_admin_tenant_name=service
+neutron_admin_username=neutron
+neutron_admin_password=<%= @neutron_password%>
+neutron_admin_auth_url=http://<%= @controller_private_ip %>:35357/v2.0
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
+# libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+service_neutron_metadata_proxy=True
+
+# Firewall
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+security_group_api=neutron
+
+# Metadata
+service_quantum_metadata_proxy = True
+quantum_metadata_proxy_shared_secret = helloOpenStack
+
+# Cinder #
+volume_api_class=nova.volume.cinder.API
+# osapi_volume_listen_port=5900
+
+# EC2
+ec2_private_dns_show_ip=True
+
+# Vnc configuration
+novnc_enabled=true
+novncproxy_base_url=http://<%= @controller_public_ip %>:6080/vnc_auto.html
+vncserver_proxyclient_address=<%= @private_ip %>
+vncserver_listen=0.0.0.0
+
+[database]
+connection=mysql://<%= @nova_user %>:<%= @nova_password %>@<%= @controller_private_ip %>/nova

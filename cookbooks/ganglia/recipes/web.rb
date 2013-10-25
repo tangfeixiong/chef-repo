@@ -12,18 +12,19 @@ when "ubuntu", "debian"
     command "htpasswd -cb /etc/ganglia/htpasswd.users #{ganglia_username} #{ganglia_password}"
   end
   
-  template "/etc/apache2/sites-available/ganglia.conf" do
+  template "/etc/apache2/conf.d/ganglia.conf" do
     source "apache_ganglia.conf.erb"
     owner "root"
     group "root"
     mode "0644"
   end
-  
+ 
+=begin   
   execute "Enable ganglia site" do
     command "/usr/sbin/a2ensite ganglia.conf"
   end
   
-=begin  
+
   link "/etc/apache2/sites-enabled/ganglia" do
     to "/etc/ganglia-webfrontend/apache.conf"
     notifies :restart, "service[apache2]"

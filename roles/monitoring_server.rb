@@ -9,10 +9,3 @@ run_list [
   "recipe[ganglia::graphite]",
   "recipe[splunk::server]"
 ]
-
-override_attributes "nagios" => {
-    "server_auth_method" => "htauth"
-  },
-  "rsyslog" => {
-    "server_ip" => ""
-}

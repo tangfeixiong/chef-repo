@@ -1,0 +1,6 @@
+{
+  "id": "nova-novncproxy_process",
+  "hostgroup_name": "havana_controller_node",
+  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_nova-novncproxy_process"
+}
+

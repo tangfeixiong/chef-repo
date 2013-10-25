@@ -13,5 +13,4 @@
 .chef/encrypted_data_bag_secret
 environments/controller_node_env.json
 data_bags/nagios_services/check_swift-proxy_process.json
-data_bags/
 *~

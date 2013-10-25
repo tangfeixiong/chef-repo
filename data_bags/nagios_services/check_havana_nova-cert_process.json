@@ -1,0 +1,6 @@
+{
+  "id": "nova-cert_process",
+  "hostgroup_name": "havana_controller_node",
+  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_nova-cert_process"
+}
+

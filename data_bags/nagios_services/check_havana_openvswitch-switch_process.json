@@ -1,0 +1,6 @@
+{
+  "id": "openvswitch-switch_process",
+  "hostgroup_name": "havana_compute_node",
+  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_openvswitch-switch_process"
+}
+

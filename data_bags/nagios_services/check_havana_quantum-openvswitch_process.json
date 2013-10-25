@@ -1,0 +1,6 @@
+{
+  "id": "quantum-openvswitch_process",
+  "hostgroup_name": "havana_network_node",
+  "command_line": "$USER1$/check_nrpe -H $HOSTADDRESS$ -c check_quantum-openvswitch_process"
+}
+

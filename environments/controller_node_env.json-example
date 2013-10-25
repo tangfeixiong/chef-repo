@@ -21,8 +21,8 @@
             "web_server_port" : "splunk_port",
             "auth" : "admin:splunk_password"
         },
-        "grizzly": {
-            "compute_node": {
+        "havana": {
+            "havana_compute_node": {
                 "root": {
                     "password": "root_password"
                 },
@@ -60,7 +60,7 @@
                   "enable_tunneling": "True"
               }
           },
-          "network_node": {
+          "havana_network_node": {
               "root": {
                   "password": "root_password"
               },
@@ -98,7 +98,7 @@
                   "enable_tunneling": "True"
               }
           },
-          "controller_node": {
+          "havana_controller_node": {
               "admin": {
                   "password": "admin_password",
                   "email": "openstack.cookbook@baremetalcloud.com",
@@ -150,7 +150,7 @@
                       "nova",
                       "glance",
                       "cinder",
-                      "quantum",
+                      "neutron",
                       "swift"
                   ],
                   "users": [
@@ -158,7 +158,7 @@
                       "nova",
                       "glance",
                       "cinder",
-                      "quantum"
+                      "neutron"
                   ],
                   "user_data": {
                       "keystone": {
@@ -173,8 +173,8 @@
                       "cinder": {
                           "password": "cinder_mysql_password"
                       },
-                      "quantum": {
-                          "password": "quantum_mysql_password"
+                      "neutron": {
+                          "password": "neutron_mysql_password"
                       }
                   }
               },
@@ -194,9 +194,9 @@
                   "iscsi_target_path": "target iqn string",
                   "iscsi_target_ip": "target portal IP"
               },
-              "quantum": {
-                  "username": "quantum",
-                  "password": "quantum_password"
+              "neutron": {
+                  "username": "neutron",
+                  "password": "neutron_password"
               },
               "glance": {
                   "username": "glance",

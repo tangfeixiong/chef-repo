@@ -54,29 +54,30 @@ From **baremetalcloud** web panel, the entire cluster can be deployed in within 
 10. Make sure their status are `Active` and their credentials were generated.
 ![alt foo](http://www.baremetalcloud.com/downloads/github/10.png)
 
-11. Click on `Cluster` tab then `Add Cluster`:
+11. Connect into `controller` server via ssh.
+12. Clone the github repository:
+
+        `cd /etc/chef-server/`
+
+        `git clone https://github.com/baremetalcloud/chef-repo.git`
+
+
+13. Click on `Cluster` tab then `Add Cluster`:
 ![alt foo](http://www.baremetalcloud.com/downloads/github/11.png)
 
-12. Add a new `OpenStack` cluster and set a name:
+14. Add a new `OpenStack` cluster and set a name:
 ![alt foo](http://www.baremetalcloud.com/downloads/github/12.png)
 
-13. A JSON will be generated and it will be used as a Chef environment:
+15. A JSON will be generated and it will be used as a Chef environment:
 ![alt foo](http://www.baremetalcloud.com/downloads/github/13.png)
-
-14. Connect into `controller` server via ssh.
-15. Clone the github repository:
-
-	`cd /etc/chef-server/`
-	
-	`git clone https://github.com/baremetalcloud/chef-repo.git`
-
 
 16. Paste the JSON into the environment file: `/etc/chef-server/chef-repo/environments/controller_node_env.json`.
 17. Initiate the installation
 
 	`./init.sh`
 
-**Come and check our YouTube video showing how this process works:** https://www.youtube.com/watch?v=0hYEQboSXLU
+**Come and check our YouTube video showing how this process works:** 
+https://www.youtube.com/watch?v=0hYEQboSXLU
 
 
 Usage - without baremetalcloud web panel

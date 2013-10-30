@@ -22,10 +22,6 @@ if node['nagios']['enable_ssl']
   include_recipe "apache2::mod_ssl"
 end
 
-apache_site "default" do
-  enable false
-end
-
 public_domain = node['public_domain'] || node['domain']
 
 template "#{node['apache']['dir']}/sites-available/nagios3.conf" do
